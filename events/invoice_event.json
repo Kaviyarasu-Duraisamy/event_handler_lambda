@@ -1,0 +1,8 @@
+{
+  "detail": [{
+    "invoiceId": "INV001",
+    "amount": 2000,
+    "customer": "Alice"
+  }],
+  "source": "custom.invoice"
+}

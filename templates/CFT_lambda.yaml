@@ -1,0 +1,47 @@
+InvoiceProcessorFunction:
+  Type: AWS::Lambda::Function
+  Properties:
+    FunctionName: InvoiceProcessorLambda
+    Handler: app.lambda_handler
+    Runtime: python3.11
+    Code:
+      S3Bucket: your-bucket-name
+      S3Key: path/to/invoice_processor.zip
+    Role: !GetAtt LambdaExecutionRole.Arn
+    Environment:
+      Variables:
+        TABLE_NAME: InvoiceTable
+
+PaymentProcessorFunction:
+  Type: AWS::Lambda::Function
+  Properties:
+    FunctionName: PaymentProcessorLambda
+    Handler: app.lambda_handler
+    Runtime: python3.11
+    Code:
+      S3Bucket: your-bucket-name
+      S3Key: path/to/payment_processor.zip
+    Role: !GetAtt LambdaExecutionRole.Arn
+    Environment:
+      Variables:
+        TABLE_NAME: PaymentTable
+
+LambdaExecutionRole:
+  Type: AWS::IAM::Role
+  Properties:
+    AssumeRolePolicyDocument:
+      Version: "2012-10-17"
+      Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+    Policies:
+      - PolicyName: LambdaDynamoDBAccess
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+              Resource: "*"

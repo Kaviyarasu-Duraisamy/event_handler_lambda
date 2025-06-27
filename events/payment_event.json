@@ -1,0 +1,8 @@
+{
+  "detail": [{
+    "paymentId": "PAY001",
+    "amount": 2000,
+    "customer": "Alice"
+  }],
+  "source": "custom.payment"
+}
